@@ -1,17 +1,36 @@
 from sentence_transformers import SentenceTransformer
-
+import faiss
 # KoSentenceBERT 모델 로드
 model = SentenceTransformer('snunlp/KR-SBERT-V40K-klueNLI-augSTS')
 
-# 임베딩할 문장 리스트
-sentences = [
-    "안녕하세요, 오늘 날씨가 좋네요.",
-    "AI를 활용한 비즈니스 혁신에 관심이 있습니다.",
-    "회사의 데이터 분석 역량을 강화하고 싶습니다."
-]
+# KoSentenceBERT 모델의 문장 임베딩 벡터 길이
+embedding_dimension = 768
 
-# 문장 임베딩 생성
-embeddings = model.encode(sentences)
+# 코사인 유사도 기반 FAISS 인덱스 생성
+index = faiss.IndexFlatIP(embedding_dimension)
+def sentence_embedding(sentences):
+    # 문장 임베딩 생성
+    embeddings = model.encode(sentences)
+    return embeddings
+
+
+def sentence_embedding_save(sentences):
+    embeddings = sentence_embedding(sentences)
+
+    # 임베딩 된 문장 데이터를 FAISS에 저장
+    index.add(embeddings)
+
+
+
+
+
+
+
+
+
+
+
+
 
 # 결과 확인
 for sentence, embedding in zip(sentences, embeddings):
