@@ -20,24 +20,15 @@ def sentence_embedding_save(sentences):
     # 임베딩 된 문장 데이터를 FAISS에 저장
     index.add(embeddings)
 
+def isInit():
+    if(model is None):
+        return False
+    if(index is None):
+        return False
+
+    return True
 
 
-
-
-
-
-
-
-
-
-
-
-# 결과 확인
-for sentence, embedding in zip(sentences, embeddings):
-    print(f"문장: {sentence}")
-    print(f"임베딩 벡터 길이: {len(embedding)}")
-    print(f"임베딩 벡터 값 (일부): {embedding[:5]}")
-    print("-" * 50)
 
 
 
